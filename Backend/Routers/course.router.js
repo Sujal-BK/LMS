@@ -51,7 +51,7 @@ router.get('/get-course', jsonAuthMiddleware, getAllCourse)
 
 router.get('/search-course', searchCourse)
 
-router.get('/get-courses/:mentorId', jsonAuthMiddleware, isMentor, getSelfCourses)
+router.get('/get-courses/:mentorId', jsonAuthMiddleware, getSelfCourses)
 
 
 export default router

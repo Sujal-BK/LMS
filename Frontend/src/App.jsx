@@ -16,6 +16,7 @@ import ProtectedUser from "./ProtectedRoutes/ProtectedUser"
 import Courses from "./User/Courses"
 import Enroll from "./User/Enroll"
 import CoursePayment from "./User/CoursePayment"
+import MentorProfile from "./User/MentorProfile"
 function App() {
  
 
@@ -40,8 +41,10 @@ function App() {
       <Route element={<ProtectedUser/>}>
       <Route path="/show-courses" element={<Courses/>}/>
       <Route path="/show-courses/enroll/:id" element={<Enroll/>}>
+
       <Route path="payment" element={<CoursePayment/>}/>
       </Route>
+      <Route path="/show-courses/:id" element={<MentorProfile/>}/>
       
      
       </Route>

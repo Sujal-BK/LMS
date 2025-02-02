@@ -1,5 +1,5 @@
 import express from 'express'
-import { forgotPassword, getMentor,  SignIn, SignUp, verifyOtpAndChangePassword } from '../Controllers/user.controller.js'
+import { forgotPassword, getMentor,  getMentorDetails,  SignIn, SignUp, verifyOtpAndChangePassword } from '../Controllers/user.controller.js'
 import { isMentor, jsonAuthMiddleware } from '../Middlewares/auth.middleware.js'
 import multer from 'multer'
 const router = express.Router()
@@ -24,6 +24,7 @@ router.post('/verify-otp',verifyOtpAndChangePassword)
 
 router.get('/mentor',jsonAuthMiddleware,isMentor,getMentor)
 
+router.get('/mentor/:id',jsonAuthMiddleware,getMentorDetails)
 
 
 export default router
