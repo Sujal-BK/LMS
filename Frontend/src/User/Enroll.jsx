@@ -11,7 +11,7 @@ const Enroll = () => {
   const getCourse = async () => {
     try {
       const { data } = await api(`course/get-course/${id}`);
-      setDetails(data.courses);
+      setDetails(data.course);
     } catch (error) {
       console.error("Failed to fetch course details", error);
     }
