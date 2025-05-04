@@ -84,7 +84,7 @@ const Signup = () => {
                             <div>Role:</div>
                             <input
                                 type="radio"
-                                value="User "
+                                value="User"
                                 name='role'
                                 onChange={(e) => setRole(e.target.value)} /> User
                             <input

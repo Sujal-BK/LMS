@@ -92,7 +92,7 @@ const AddCourses = () => {
             toast.success('Course added successfully!');
             console.log('Course added successfully:', response.data);
 
-            // Clear the form
+            // Clear the form and reassign mentor ID
             setCourseData({
                 title: '',
                 description: '',
@@ -139,7 +139,7 @@ const AddCourses = () => {
                 <div>
                     <label className="block text-gray-700 font-medium">Price:</label>
                     <input
-                        type="text"
+                        type="number"
                         name="price"
                         value={courseData.price}
                         onChange={handleChange}
@@ -163,7 +163,7 @@ const AddCourses = () => {
                     <input
                         type="file"
                         name="coverImg"
-                        accept="image/jpeg, image/png"
+                        accept="image/*"
                         onChange={handleFileChange}
                         className="w-full"
                         required
@@ -174,7 +174,7 @@ const AddCourses = () => {
                     <input
                         type="file"
                         name="videos"
-                        accept="video/mp4"
+                        accept="video/*"
                         multiple
                         onChange={handleFileChange}
                         className="w-full"

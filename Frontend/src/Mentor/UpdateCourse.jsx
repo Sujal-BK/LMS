@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import api from "../../api/axios";
 
 const UpdateCourse = () => {
-    const [mentorId, setMentorId] = useState(null);
     const { courseId } = useParams();
+    const navigate = useNavigate();
+    const [mentorId, setMentorId] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [initialLoading, setInitialLoading] = useState(true); // for fetching course data
 
     const [formData, setFormData] = useState({
         title: "",
@@ -14,30 +17,47 @@ const UpdateCourse = () => {
         category: "",
         mentor: "",
         coverImg: null,
-        videos: [],
+        videos: [], // handle multiple videos here
     });
-    const [loading, setLoading] = useState(false);
 
+    // Fetch logged-in mentor info
     const getMentor = async () => {
         try {
             const { data } = await api.get("/auth/mentor");
             setMentorId(data.mentor._id);
         } catch (error) {
-            console.error(error.response?.data?.message || "Error fetching mentor details");
-            toast.error(error.response?.data?.message || "Error fetching mentor details");
+            console.error("Error fetching mentor info");
+            toast.error("Error fetching mentor info");
+        }
+    };
+
+    // Fetch course details to populate the form
+    const getCourseDetails = async () => {
+        try {
+            const { data } = await api.get(`/course/get-course/${courseId}`);
+            const course = data.course;
+
+            setFormData({
+                title: course.title || "",
+                description: course.description || "",
+                price: course.price || "",
+                category: course.category || "",
+                mentor: course.mentor || "",
+                coverImg: null,
+                videos: [], // You can populate this with existing video URLs if necessary
+            });
+        } catch (error) {
+            console.error("Error fetching course", error);
+            toast.error("Failed to load course data");
+        } finally {
+            setInitialLoading(false);
         }
     };
 
     useEffect(() => {
         getMentor();
+        getCourseDetails();
     }, []);
-
-    useEffect(() => {
-        setFormData((prevData) => ({
-            ...prevData,
-            mentor: mentorId,
-        }));
-    }, [mentorId]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -51,7 +71,7 @@ const UpdateCourse = () => {
         const { name, files } = e.target;
         setFormData((prev) => ({
             ...prev,
-            [name]: name === "coverImg" ? files[0] : files,
+            [name]: name === "coverImg" ? files[0] : files, // handle multiple videos
         }));
     };
 
@@ -64,7 +84,7 @@ const UpdateCourse = () => {
         data.append("description", formData.description);
         data.append("price", formData.price);
         data.append("category", formData.category);
-        data.append("mentor", mentorId);
+        data.append("mentor", mentorId); // ensure latest mentor ID
 
         if (formData.coverImg) {
             data.append("coverImg", formData.coverImg);
@@ -77,19 +97,20 @@ const UpdateCourse = () => {
         }
 
         try {
-            const response = await api.put(`/course/update-course/${courseId}`, data, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
+            await api.put(`/course/update-course/${courseId}`, data, {
+                headers: { "Content-Type": "multipart/form-data" },
             });
 
             toast.success("Course updated successfully!");
+            navigate("/mentor"); // or wherever the dashboard route is
         } catch (error) {
-            toast.error(error.response?.data?.message || "Failed to update course");
+            toast.error(error.response?.data?.message || "Update failed");
         } finally {
             setLoading(false);
         }
     };
+
+    if (initialLoading) return <div className="text-center mt-10">Loading course...</div>;
 
     return (
         <div className="p-4 max-w-4xl mx-auto">
@@ -98,49 +119,30 @@ const UpdateCourse = () => {
                 onSubmit={handleSubmit}
                 className="bg-white shadow-lg rounded-lg p-6 mt-6 space-y-4"
             >
-                <div>
-                    <label className="block text-gray-700 font-medium">Title:</label>
-                    <input
-                        type="text"
-                        name="title"
-                        value={formData.title}
-                        onChange={handleChange}
-                        className="w-full px-3 py-2 border rounded-lg"
-                        required
-                    />
-                </div>
-                <div>
-                    <label className="block text-gray-700 font-medium">Description:</label>
-                    <textarea
-                        name="description"
-                        value={formData.description}
-                        onChange={handleChange}
-                        className="w-full px-3 py-2 border rounded-lg"
-                        required
-                    />
-                </div>
-                <div>
-                    <label className="block text-gray-700 font-medium">Price:</label>
-                    <input
-                        type="number"
-                        name="price"
-                        value={formData.price}
-                        onChange={handleChange}
-                        className="w-full px-3 py-2 border rounded-lg"
-                        required
-                    />
-                </div>
-                <div>
-                    <label className="block text-gray-700 font-medium">Category:</label>
-                    <input
-                        type="text"
-                        name="category"
-                        value={formData.category}
-                        onChange={handleChange}
-                        className="w-full px-3 py-2 border rounded-lg"
-                        required
-                    />
-                </div>
+                {["title", "description", "price", "category"].map((field) => (
+                    <div key={field}>
+                        <label className="block text-gray-700 font-medium capitalize">{field}:</label>
+                        {field === "description" ? (
+                            <textarea
+                                name={field}
+                                value={formData[field]}
+                                onChange={handleChange}
+                                className="w-full px-3 py-2 border rounded-lg"
+                                required
+                            />
+                        ) : (
+                            <input
+                                type={field === "price" ? "number" : "text"}
+                                name={field}
+                                value={formData[field]}
+                                onChange={handleChange}
+                                className="w-full px-3 py-2 border rounded-lg"
+                                required
+                            />
+                        )}
+                    </div>
+                ))}
+
                 <div>
                     <label className="block text-gray-700 font-medium">Cover Image:</label>
                     <input
@@ -149,9 +151,9 @@ const UpdateCourse = () => {
                         accept="image/*"
                         onChange={handleFileChange}
                         className="w-full"
-                        required
                     />
                 </div>
+
                 <div>
                     <label className="block text-gray-700 font-medium">Videos:</label>
                     <input
@@ -163,6 +165,7 @@ const UpdateCourse = () => {
                         className="w-full"
                     />
                 </div>
+
                 <button
                     type="submit"
                     disabled={loading}
