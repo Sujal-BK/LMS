@@ -1,5 +1,5 @@
 import express from 'express'
-import { addCourse,getAllCourse,getCourseById,getSelfCourses,updateCourse,deleteCourse } from '../Controllers/course.controller.js'
+import { addCourse,getAllCourse,getCourseById,getSelfCourses,updateCourse,deleteCourse, searchCourse } from '../Controllers/course.controller.js'
 import { isMentor, jsonAuthMiddleware } from '../Middlewares/auth.middleware.js'
 import { uploadFields } from '../Middlewares/multer.middleware.js'
 
@@ -52,7 +52,7 @@ router.get('/get-course/:id', jsonAuthMiddleware, getCourseById)
 
 router.get('/get-course', jsonAuthMiddleware, getAllCourse)
 
-// router.get('/search-course', searchCourse)
+router.get('/search-course',searchCourse)
 
 router.get('/get-courses/:mentorId', jsonAuthMiddleware, getSelfCourses)
 

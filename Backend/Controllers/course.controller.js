@@ -362,27 +362,45 @@ export const getSelfCourses = async (req, res) => {
   }
 }
 
-// export const searchCourse = async(req,res)=>{
-//   try {
-//     const {query} = req.query
-//     const regex = new RegExp(query,'i')
-//     const courses = await Course.find({
-//       $or:[
-//         {title:{$regex:regex}},
-//         {description:{$regex:regex}}
-//       ]
-//     })
-//     return res.status(200).json({
-//       success: true,
-//       results: courses.length,
-//       courses
-//   });
-//   } catch (error) {
-//     console.log(error);
-//     return res.status(500).json({
-//         success : false,
-//         message :"Server Error in search Course",
-//         error
-//     })
-//   }
-// }
+export const searchCourse = async (req, res) => {
+  const { query } = req.query
+  if (!query || query.trim() === '') {
+    return res.status(404).json({
+      success: false,
+      message: 'Search query is required'
+    })
+  }
+  try {
+
+    const searchRegex = new RegExp(query, 'i');
+    const courses = await Course.find({
+      $or: [
+        {
+          title: searchRegex,
+         
+        },
+        {
+           description: searchRegex
+        },
+        {
+          category : searchRegex
+        },
+      ]
+    })
+
+    console.log(courses)
+
+    return res.status(200).json({
+      success: true,
+      courses
+    })
+
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Server Error in get Course",
+      error
+    })
+  }
+}
