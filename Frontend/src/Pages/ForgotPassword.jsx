@@ -44,7 +44,7 @@ const ForgotPassword = () => {
     };
 
     return (
-        <Layout>
+      
             <div className="flex flex-col items-center justify-center h-screen px-4 bg-gray-50">
                 <div className="w-full max-w-md bg-white shadow-lg rounded-lg p-6">
                     <h1 className="text-2xl font-semibold text-center text-gray-700 mb-4">
@@ -98,7 +98,7 @@ const ForgotPassword = () => {
                     </button>
                 </div>
             </div>
-        </Layout>
+       
     );
 };
 

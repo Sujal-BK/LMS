@@ -46,7 +46,7 @@ const Home = () => {
 
   
   return (
-    <Layout>
+  
       <div>
         <div className='w-full   md:max-w-[1400px] h-[400px] mx-auto  '>
           <div style={{backgroundImage:`url(${slides[currentIdx].url})`}}
@@ -80,7 +80,7 @@ const Home = () => {
       <hr  className='mx-4 '/>
       <Plans/>
       </div>
-    </Layout>
+    
   )
 }
 

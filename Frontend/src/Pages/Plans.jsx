@@ -4,9 +4,11 @@ import { FaArrowRight } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import { BsCheck2Circle } from "react-icons/bs";
 import { FaUsers } from "react-icons/fa";
+import Layout from '../Layout/Layout';
 
 const Plans = () => {
     return (
+      
         <div className="p-4">
             {/* Header Section */}
             <div className="text-center mb-8">
@@ -102,6 +104,7 @@ const Plans = () => {
 
             </div>
         </div>
+       
     );
 };
 
