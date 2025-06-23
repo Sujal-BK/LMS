@@ -260,12 +260,6 @@ export const deleteCourse = async (req, res) => {
     const { id } = req.params;
 
     const deletedCourse = await Course.findByIdAndDelete(id);
-    if (!deletedCourse) {
-      return res.status(404).json({
-        success: false,
-        message: "Course not found",
-      });
-    }
 
     res.status(200).json({
       success: true,

@@ -9,7 +9,7 @@ const TeachOnLMS = () => {
     const url = "https://s.udemycdn.com/teaching/billboard-desktop-v4.jpg";
 
     return (
-        <Layout>
+        
             <div className="w-full -my-4">
                 {/* Container with responsive background image */}
                 <div
@@ -70,7 +70,7 @@ const TeachOnLMS = () => {
                     </div>
                 </div>
             </div>
-        </Layout>
+       
     );
 };
 

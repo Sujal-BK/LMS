@@ -22,8 +22,8 @@ const Footer = () => {
           <ul className="space-y-2">
             <li><Link to="/teach" className="hover:underline">Teach on LMS</Link></li>
             <li><Link to="/plans" className="hover:underline">Plans & Pricing</Link></li>
-            <li><Link  className="hover:underline">Affiliate</Link></li>
-            <li><Link  className="hover:underline">Help and Support</Link></li>
+            <li><Link  to="/affiliate" className="hover:underline">Affiliate</Link></li>
+            <li><Link  to="/help" className="hover:underline">Help and Support</Link></li>
           </ul>
         </div>
 
@@ -31,10 +31,10 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-semibold mb-4">Legal & Accessibility</h3>
           <ul className="space-y-2">
-            <li><Link className="hover:underline">Accessibility Statement</Link></li>
-            <li><Link  className="hover:underline">Privacy Policy</Link></li>
+            <li><Link to="/legel-page" className="hover:underline">Accessibility Statement</Link></li>
+            <li><Link  to="/legel-page"  className="hover:underline">Privacy Policy</Link></li>
             <li><Link  className="hover:underline">Sitemap</Link></li>
-            <li><Link  className="hover:underline">Terms</Link></li>
+            <li><Link  to="/legel-page"  className="hover:underline">Terms</Link></li>
           </ul>
         </div>
       </div>

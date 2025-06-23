@@ -24,6 +24,9 @@ import Career from "./Pages/Career";
 import ContactUs from "./Pages/ContactUs";
 import InvestmentInfo from "./Pages/InvestmentInfo";
 import ScrollToTop from "./Helper/ScrollToTop";
+import Affiliate from "./Pages/Affiliate";
+import HelpSupport from "./Pages/HelpSupport";
+import LegalPages from "./Pages/LegalPages";
 
 function App() {
   return (
@@ -39,6 +42,9 @@ function App() {
       <Route path="/career" element={<Layout><Career /></Layout>} />
       <Route path="/contact-us" element={<Layout><ContactUs /></Layout>} />
       <Route path="/investment" element={<Layout><InvestmentInfo /></Layout>} />
+       <Route path="/affiliate" element={<Layout><Affiliate /></Layout>} />
+        <Route path="/help" element={<Layout><HelpSupport /></Layout>} />
+         <Route path="/legel-page" element={<Layout><LegalPages /></Layout>} />
 
       {/* Protected Routes - Authentication */}
       <Route element={<ProtectedAuth />}>

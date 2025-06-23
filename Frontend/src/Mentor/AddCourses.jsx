@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../api/axios';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const AddCourses = () => {
     const [mentorId, setMentorId] = useState('');
@@ -13,6 +14,8 @@ const AddCourses = () => {
         mentor: '',
         videos: [],
     });
+
+    const navigate  = useNavigate()
 
     const getMentor = async () => {
         try {
@@ -102,6 +105,9 @@ const AddCourses = () => {
                 mentor: mentorId,
                 videos: [],
             });
+
+            navigate('/mentor')
+
         } catch (err) {
             console.error('Error adding course:', err.response?.data?.message || err);
             toast.error(err.response?.data?.message || 'Failed to add course.');
